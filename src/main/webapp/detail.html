@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<#assign blogDetail = blogDetail("id=" + Request.rewriteParams1).data>
+<#assign header_title = "${blogDetail.title} - YiJava博客 -Powered By YiJava">
+<#include "/include/html_header.html" encoding="UTF-8"/>
+<body class="home">
+  <#include "/include/body_header.html" encoding="UTF-8"/>
+  <section class="banner">
+    <div class="collection-head">
+      <div class="container">
+        <div class="collection-title">
+          <h1 class="collection-header">${blogDetail.title}</h1>
+          <div class="collection-info">
+            <span class="meta-info">
+                ${blogDetail.descript}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="container content">
+    <div class="columns">
+      <div class="column two-thirds">
+        <article class="article-content markdown-body">
+            ${blogDetail.content}
+        </article>
+      </div>
+      <#include "/include/right_menu.html" encoding="UTF-8"/>
+    </div>
+    <!-- /pagination -->
+  </section>
+  <#include "/include/footer.html" encoding="UTF-8"/>
+
+</body>
+
+</html>

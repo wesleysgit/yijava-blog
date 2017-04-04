@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<#assign header_title = "YiJava博客 -Powered By YiJava">
+<#include "/include/html_header.html" encoding="UTF-8"/>
+<body class="home">
+  <#include "/include/body_header.html" encoding="UTF-8"/>
+  <section class="banner">
+    <div class="collection-head">
+      <div class="container">
+        <#if Request.rewriteName == "category">
+          <#assign categoryParam = "categoryId=" + Request.rewriteParams1>
+          <#assign categoryDetail = blogCategoryDetail("id=" + Request.rewriteParams1).data>
+          <div class="collection-title">
+            <h1 class="collection-header">${categoryDetail.name}</h1>
+          </div>
+        <#elseif Request.rewriteName == "search">
+          <#assign keywordsParam = "titleLike=" + urlEncode(RequestParameters.keyword, 0)>
+          <div class="collection-title">
+            <h1 class="collection-header">${RequestParameters.keyword}</h1>
+          </div>
+        <#elseif Request.rewriteName == "tag">
+          <#assign keywordsParam = "tagsLike=" + urlEncode(RequestParameters.tag, 0)>
+          <div class="collection-title">
+            <h1 class="collection-header">${RequestParameters.tag}</h1>
+          </div>
+        <#else>
+        <div class="collection-title">
+          <h1 class="collection-header">Gooking</h1>
+          <div class="collection-info">
+            <span class="meta-info">
+                如果不能成为拯救世界的神，那就堕落到征服世界的魔吧！
+            </span>
+          </div>
+        </div>
+        </#if>
+      </div>
+    </div>
+  </section>
+  <section class="container content">
+    <div class="columns">
+      <div class="column two-thirds">
+        <ol class="repo-list">
+          <#assign curPage = RequestParameters.page!1>
+          <#assign articleNumbers = 0>
+          <#list blogs("page=" + curPage, "pageSize=8", categoryParam, keywordsParam).data as blog>
+          <#assign articleNumbers = articleNumbers + 1>
+          <li class="repo-list-item">
+            <h3 class="repo-list-name">
+                <a href="/article/${blog.id}.html" title="${blog.title}">
+                    ${blog.title}
+                </a>
+            </h3>
+            <p class="repo-list-description">
+              ${blog.descript}
+            </p>
+            <p class="repo-list-meta">
+              <span class="octicon octicon-calendar"></span> ${blog.dateAdd?date}
+            </p>
+          </li>
+          </#list>
+          <#if articleNumbers == 0>
+          <li class="repo-list-item">
+            <p class="repo-list-description">
+              <#if keywordsParam??>
+              暂时没搜到关于关键字 <font style="font-size:16px;color:red;font-weight:bold;">${RequestParameters.keyword}</font> 的内容，换个关键字试试吧～
+              <#else>
+              没有更多数据了 ~
+              </#if>
+            </p>
+          </li>
+          </#if>
+        </ol>
+      </div>
+      <#include "/include/right_menu.html" encoding="UTF-8"/>
+    </div>
+    <#if !keywordsParam??>
+    <div class="pagination text-align">
+      <nav>
+        <ul class="pager">
+          <#if curPage == 1>
+          <li class="previous disabled">
+            <span><span aria-hidden="true">&larr;</span>上一页</span>
+          </li>
+          <#else>
+          <li class="previous"><a href="?page=${curPage?eval-1}" rel="prev"><span aria-hidden="true">&larr;</span>上一页</a></li>
+          </#if>
+          <#if articleNumbers == 0>
+          <li class="disabled"><span>下一页<span aria-hidden="true">&rarr;</span></span></li>
+          <#else>
+          <li class="next"><a href="?page=${curPage?eval+1}" rel="next">下一页<span aria-hidden="true">&rarr;</span></a></li>
+          </#if>
+        </ul>
+      </nav>
+    </div>
+    </#if>
+    <!-- /pagination -->
+  </section>
+  <#include "/include/footer.html" encoding="UTF-8"/>
+  <script src="/js/share.min.js"></script>
+  <script src="/js/jquery.qrcode.min.js"></script>
+  <script src="/js/geopattern.js"></script>
+  <script src="/js/prism.js"></script>
+  <link rel="stylesheet" href="/css/prism.css">
+
+  <script>
+    jQuery(document).ready(function($) {
+      // geopattern
+      $('.geopattern').each(function() {
+        $(this).geopattern($(this).data('pattern-id'));
+      });
+
+      $("#open").mouseover(function() {
+        $("#search_input").fadeIn(1).animate({
+          width: '300px',
+          opacity: '10'
+        });
+        $("#search_input")[0].focus();
+        $("#open").fadeOut(10);
+      });
+
+      $("#search_input").blur(function() {
+        $("#search_input").animate({
+          width: 'toggle',
+          opacity: '0.1'
+        }).fadeOut(2);
+        $("#open").delay(400).fadeIn(100);
+      });
+      $('.share-bar').share();
+    });
+  </script>
+</body>
+
+</html>

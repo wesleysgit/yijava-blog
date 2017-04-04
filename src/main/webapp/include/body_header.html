@@ -1,0 +1,15 @@
+<header class="site-header">
+  <div class="container">
+    <h1><a href="/">YiJava Blog</a></h1>
+    <nav class="site-header-nav" role="navigation">
+      <a href="/" class=" site-header-nav-item" target="" title="Home">Home</a>
+      <#list blogCategory().data as category>
+      <a href="/category/${category.id}.html" class="site-header-nav-item">${category.name}</a>
+      </#list>
+      <form class="demo_search" action="/search/keyword.html" method="post">
+        <i class="icon_search" id="open"></i>
+        <input class="demo_sinput" type="text" name="keyword" id="search_input" placeholder="输入关键字 回车搜索" />
+      </form>
+    </nav>
+  </div>
+</header>
