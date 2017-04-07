@@ -4,9 +4,9 @@
     <nav class="site-header-nav" role="navigation">
       <a href="/" class=" site-header-nav-item" target="" title="Home">Home</a>
       <#list blogCategory().data as category>
-      <a href="/category/${category.id}.html" class="site-header-nav-item">${category.name}</a>
+      <a href="/category/${category.id}" class="site-header-nav-item">${category.name}</a>
       </#list>
-      <form class="demo_search" action="/search/keyword.html" method="post">
+      <form class="demo_search" action="/search/keyword" method="post">
         <i class="icon_search" id="open"></i>
         <input class="demo_sinput" type="text" name="keyword" id="search_input" placeholder="输入关键字 回车搜索" />
       </form>

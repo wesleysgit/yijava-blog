@@ -7,28 +7,28 @@
   <section class="banner">
     <div class="collection-head">
       <div class="container">
-        <#if Request.rewriteName == "category">
-          <#assign categoryParam = "categoryId=" + Request.rewriteParams1>
-          <#assign categoryDetail = blogCategoryDetail("id=" + Request.rewriteParams1).data>
+        <#if rewriteName == "category">
+          <#assign categoryParam = "categoryId=" + rewriteParams1>
+          <#assign categoryDetail = blogCategoryDetail("id=" + rewriteParams1).data>
           <div class="collection-title">
             <h1 class="collection-header">${categoryDetail.name}</h1>
           </div>
-        <#elseif Request.rewriteName == "search">
+        <#elseif rewriteName == "search">
           <#assign keywordsParam = "titleLike=" + urlEncode(RequestParameters.keyword, 0)>
           <div class="collection-title">
             <h1 class="collection-header">${RequestParameters.keyword}</h1>
           </div>
-        <#elseif Request.rewriteName == "tag">
+        <#elseif rewriteName == "tag">
           <#assign keywordsParam = "tagsLike=" + urlEncode(RequestParameters.tag, 0)>
           <div class="collection-title">
             <h1 class="collection-header">${RequestParameters.tag}</h1>
           </div>
         <#else>
         <div class="collection-title">
-          <h1 class="collection-header">Gooking</h1>
+          <h1 class="collection-header">只有4MB的开源博客系统</h1>
           <div class="collection-info">
             <span class="meta-info">
-                如果不能成为拯救世界的神，那就堕落到征服世界的魔吧！
+                无需数据库支持，可无缝对接 阿里云、百度、聚合 接口，不怕数据丢失，轻易实现数据迁移
             </span>
           </div>
         </div>
@@ -42,11 +42,11 @@
         <ol class="repo-list">
           <#assign curPage = RequestParameters.page!1>
           <#assign articleNumbers = 0>
-          <#list blogs("page=" + curPage, "pageSize=8", categoryParam, keywordsParam).data as blog>
+          <#list blogs("isRecommend=0", "page=" + curPage, "pageSize=8", categoryParam, keywordsParam).data as blog>
           <#assign articleNumbers = articleNumbers + 1>
           <li class="repo-list-item">
             <h3 class="repo-list-name">
-                <a href="/article/${blog.id}.html" title="${blog.title}">
+                <a href="/article/${blog.id}" title="${blog.title}">
                     ${blog.title}
                 </a>
             </h3>

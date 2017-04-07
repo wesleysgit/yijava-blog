@@ -4,7 +4,7 @@
     <ul class="boxed-group-inner mini-repo-list">
       <#list blogs("isRecommend=1").data as blog>
       <li class="public source ">
-        <a href="/article/${blog.id}.html" class="mini-repo-list-item css-truncate" title="${blog.title}">
+        <a href="/article/${blog.id}" class="mini-repo-list-item css-truncate" title="${blog.title}">
           <span class="repo-and-owner css-truncate-target">
               ${blog.title}
           </span>
@@ -20,7 +20,7 @@
     <h4 class="title">标签云</h4>
     <div class="content tag-cloud">
       <#list tagslist().data as tag>
-      <a href="/search/tag.html?tag=${tag.name}" title="${tag.name}">${tag.name}</a>
+      <a href="/search/tag?tag=${tag.name}" title="${tag.name}">${tag.name}</a>
       </#list>
     </div>
   </div>
